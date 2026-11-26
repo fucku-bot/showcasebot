@@ -1,0 +1,14 @@
+{
+  "geode": "4.0.0",
+  "gd": {
+    "win": "2.2074",
+    "android": "2.2074",
+    "mac": "2.2074",
+    "ios": "2.2074"
+  },
+  "id": "yourname.showcasebot",
+  "name": "Showcase Bot",
+  "version": "v1.0.0",
+  "developer": "yourname",
+  "description": "Record and replay your inputs for level showcases. Tap On inside a level."
+}
