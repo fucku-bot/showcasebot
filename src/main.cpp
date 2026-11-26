@@ -2,7 +2,7 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <fstream>
-#include <filesystem>
+#include <cstdio>
 
 using namespace geode::prelude;
 
@@ -19,8 +19,9 @@ static bool g_injecting = false;
 static int g_frame = 0;
 static size_t g_index = 0;
 
-static std::filesystem::path macroPath(int id) {
-    return Mod::get()->getSaveDir() / fmt::format("level_{}.macro", id);
+static std::string macroPath(int id) {
+    auto p = Mod::get()->getSaveDir() / fmt::format("level_{}.macro", id);
+    return geode::utils::string::pathToString(p);
 }
 
 static void saveMacro(int id) {
@@ -113,8 +114,7 @@ class $modify(BotPlayLayer, PlayLayer) {
     }
 
     void onBotClear(CCObject*) {
-        std::error_code ec;
-        std::filesystem::remove(macroPath(m_level->m_levelID.value()), ec);
+        std::remove(macroPath(m_level->m_levelID.value()).c_str());
         g_macro.clear();
         g_enabled = false;
         g_replaying = false;
