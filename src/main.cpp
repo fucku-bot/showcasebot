@@ -194,7 +194,7 @@ static bool botPlay(PlayLayer* pl) {
 // =====================================================================
 //  GUI popup
 // =====================================================================
-class BotPopup : public geode::Popup<> {
+class BotPopup : public Popup {
 protected:
     CCLabelBMFont* m_statusLabel = nullptr;
     CCLabelBMFont* m_libLabel = nullptr;
@@ -208,7 +208,8 @@ protected:
         return btn;
     }
 
-    bool setup() override {
+    bool init() {
+        if (!Popup::init(360.f, 280.f)) return false;
         this->setTitle("Showcase Bot");
         float W = m_size.width;
         float H = m_size.height;
@@ -250,8 +251,7 @@ protected:
     void buildList() {
         if (m_list) m_list->removeFromParent();
         m_list = ScrollLayer::create(CCSize(300.f, 120.f));
-        m_list->setPosition({ m_size.width / 2 - 150.f, 23.f });
-        m_mainLayer->addChild(m_list);
+        m_mainLayer->addChildAtPosition(m_list, Anchor::BottomLeft, ccp(m_size.width / 2 - 150.f, 23.f));
 
         auto macros = listMacros();
         m_libLabel->setString(fmt::format("Library ({})", macros.size()).c_str());
@@ -351,7 +351,7 @@ protected:
 public:
     static BotPopup* create() {
         auto ret = new BotPopup();
-        if (ret->initAnchored(360.f, 280.f)) {
+        if (ret->init()) {
             ret->autorelease();
             return ret;
         }
@@ -481,9 +481,8 @@ class $modify(BotPlayLayer, PlayLayer) {
             if (practice) {
                 // Practice run done: replay it from the start in normal mode
                 toast("Saved! Replaying in normal mode...", NotificationIcon::Success);
-                Ref<PlayLayer> self(static_cast<PlayLayer*>(this));
-                Loader::get()->queueInMainThread([self]() {
-                    botPlay(self.data());
+                Loader::get()->queueInMainThread([]() {
+                    if (auto pl = PlayLayer::get()) botPlay(pl);
                 });
                 return;
             }
