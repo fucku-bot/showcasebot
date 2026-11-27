@@ -5,7 +5,7 @@
   },
   "id": "yourname.showcasebot",
   "name": "Showcase Bot",
-  "version": "v1.0.0",
+  "version": "v1.1.0",
   "developer": "yourname",
   "description": "Record and replay your inputs for level showcases. Tap On inside a level."
 }
