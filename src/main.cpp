@@ -1,4 +1,6 @@
 #include <Geode/Geode.hpp>
+#include <Geode/ui/Popup.hpp>
+#include <Geode/ui/ScrollLayer.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <algorithm>
