@@ -39,7 +39,7 @@ static bool loadMacro(int id) {
 }
 
 class $modify(BotGJBaseGameLayer, GJBaseGameLayer) {
-    void processCommands(float dt) {
+    void processCommands(float dt, bool isHalfTick, bool isLastTick) {
         if (g_enabled) {
             if (g_replaying) {
                 while (g_index < g_macro.size() && g_macro[g_index].frame <= g_frame) {
@@ -51,7 +51,7 @@ class $modify(BotGJBaseGameLayer, GJBaseGameLayer) {
             }
             g_frame++;
         }
-        GJBaseGameLayer::processCommands(dt);
+        GJBaseGameLayer::processCommands(dt, isHalfTick, isLastTick);
     }
 
     void handleButton(bool down, int button, bool isPlayer1) {
